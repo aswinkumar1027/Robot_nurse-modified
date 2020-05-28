@@ -32,6 +32,8 @@ def follow_line():
             robot.left()
             print("left")
         
+def take_pressure():
+    pressures.on()
 
 robo_actions = {
     "forward": robot.forward,
@@ -41,7 +43,7 @@ robo_actions = {
     "stop": robot.stop,
     "line": follow_line,
     "examine": examine,
-    "pressure": pressures.on,
+    "pressure": take_pressure,
     "Temperature": thermal.on
 }
 
