@@ -34,6 +34,7 @@ def follow_line():
         
 def take_pressure():
     pressures.on()
+    pressures.off()
 
 robo_actions = {
     "forward": robot.forward,
