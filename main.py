@@ -11,7 +11,7 @@ rightend = gpiozero.DigitalInputDevice(22)
 backl = gpiozero.DigitalInputDevice(23)
 rightl = gpiozero.DigitalInputDevice(19)
 
-Thermal = gpiozero.LED(20)
+thermal = gpiozero.LED(20)
 pressures = gpiozero.LED(21)
 
 
@@ -33,13 +33,6 @@ def follow_line():
             print("left")
         
 
-def pressure():
-    pressures.on()
-    
-def Temperature():
-    Thermal.on()
-    
-
 robo_actions = {
     "forward": robot.forward,
     "backward": robot.backward,
@@ -48,8 +41,8 @@ robo_actions = {
     "stop": robot.stop,
     "line": follow_line,
     "examine": examine,
-    "pressure": pressure,
-    "Temperature": Temperature
+    "pressure": pressures.on,
+    "Temperature": thermal.on
 }
 
 @app.route("/")                   
