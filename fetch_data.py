@@ -11,24 +11,21 @@ API_KEY =  "k7MU6E0V1UyI3a13T477BMDQc" # Thrissur
 # API_KEY =  "BYiqDUncnNkgmm6Zlw6KX7HUj" # Ernakulam
 
 
+def get_active_bed_data():
+    #Active beds
+    ACTIVE_BEDS_URL = URL + "active_beds/"
+    JSON_DATA = {"API_KEY": API_KEY}
 
-#Active beds
-ACTIVE_BEDS_URL = URL + "active_beds/"
-JSON_DATA = {"API_KEY": API_KEY}
+    response = requests.post(ACTIVE_BEDS_URL, json=JSON_DATA)
+    # print(json.loads(response.text)) # Comment after use
+    active_beds = json.loads(response.text) # Convert JSON to Python Dict
+    return active_beds
 
-response = requests.post(ACTIVE_BEDS_URL, json=JSON_DATA)
-print(json.loads(response.text)) # Comment after use
-ACTIVE_BED = json.loads(response.text)
-
-# Patient Details
-""" 
-Bed Id. Temorarily setting as first bed id from the active bed list. 
-Change as required later (Programatically)
-"""
-BED_ID = ACTIVE_BED["beds"][0] 
-
-PATIENT_DETAILS_URL = URL + "patient_details/"
-JSON_DATA = {"API_KEY": API_KEY, "bed_name": BED_ID}
-response = requests.post(PATIENT_DETAILS_URL, json=JSON_DATA)
-print(json.loads(response.text)) # Comment After use
-PATIENT_DETILS = json.loads(response.text)
+def get_patient_details(BED_ID):
+    # Patient Details
+    PATIENT_DETAILS_URL = URL + "patient_details/"
+    JSON_DATA = {"API_KEY": API_KEY, "bed_name": BED_ID}
+    response = requests.post(PATIENT_DETAILS_URL, json=JSON_DATA)
+    # print(json.loads(response.text)) # Comment After use
+    patient_details = json.loads(response.text) # Convert JSON to Python Dict
+    return patient_details
