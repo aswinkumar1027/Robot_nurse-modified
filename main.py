@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 import datetime
 import gpiozero
 import time
+import serial
+import subprocess
 
 app = Flask(__name__)
 robot = gpiozero.Robot(left=(26,16), right=(5,6))
@@ -15,9 +17,12 @@ rightback = gpiozero.DigitalInputDevice(19)
 thermal = gpiozero.LED(20)
 pressures = gpiozero.LED(21)
 
-rfid_dict = {}
-active_beds = ()                                        #fetch from main server
-left_beds = ()
+rfid_dict = {'E235FC8B\r\n': 'A1'}
+active_beds = ('A1')                                        #fetch from main server
+left_beds = ('A1')
+
+ser=serial.Serial("/dev/ttyACM0",9600)  #change ACM number as found from ls /dev/tty/ACM*
+ser.baudrate = 9600
 
 turn_left = False
 
@@ -27,6 +32,7 @@ def rfid_read():
     read_ser=ser.readline()
     print(read_ser)
     bed = rfid_dict[read_ser]
+    
     if (bed in active_beds):
         print("Active beds are detected")
         turn_left = bed in left_beds
@@ -98,4 +104,4 @@ def move():
     return "Moving " + movement
     
 if __name__ == "__main__":        
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=True, use_reloader=False)
