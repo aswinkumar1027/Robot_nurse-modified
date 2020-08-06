@@ -22,7 +22,7 @@ left_beds = ()
 turn_left = False
 
 def rfid_read():
-    global turn_var                                   #rfid taking and decisions
+    global turn_left                                   #rfid taking and decisions
     print("RFID")
     read_ser=ser.readline()
     print(read_ser)
