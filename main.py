@@ -17,74 +17,50 @@ pressures = gpiozero.LED(21)
 
 rfid_dict = {}
 active_beds = ()                                        #fetch from main server
-left_beds = []
+left_beds = ()
 
-global turn_var = 0
+turn_left = False
 
-
-
-
-def rfid_read():                                       #rfid taking and decisions
+def rfid_read():
+    global turn_var                                   #rfid taking and decisions
     print("RFID")
     read_ser=ser.readline()
     print(read_ser)
-    bed = rfid_dict(read_ser)
+    bed = rfid_dict[read_ser]
     if (bed in active_beds):
         print("Active beds are detected")
-        if (bed in left_beds):
-            print("left_turn")
-            left_inter(True)
-            turn_var = 1
-            break
-        else:
-            right_inter(True)
-            print("right_turn")
-            turn_var = 2
-            break
+        turn_left = bed in left_beds
+        turn_robot()
     else:
         print("not in active beds list")
+        # So that robot automatically moves on to next bed
+        robot.forward()
+        time.sleep(1)
+        follow_line()
 
         
-        
-
-            
-
-
-def left_inter():                                       #interaction left turning
-    robot.left()
-    time.sleep(0.5)
-    while True:
-        if (center.is_active = True):
-            robot.stop
-            break
-
-
-
-def right_inter():                                      #interaction right turning
-    robot.right()
-    time.sleep(0.5)
-    while True:
-        if (center.is_active = True):
-            robot.stop
-            break
-
-
-
-def examine():                                          #examination_finish and continue
-    if(turn_var == 1):
-        right_inter()
-        print("turning_right")
-    elif:
-        turn_var == 2:
-        left_inter()
+def turn_robot():
+    if turn_left:                                  #interaction left turning
         print("turning_left")
-    
+        robot.left()
+    else:
+        print("turning_right")
+        robot.right()
+    time.sleep(0.5)
+    while True:
+        if center.is_active:
+            robot.stop()
+            break
+
+
+def examine():
+    global turn_left                                        #examination_finish and continue
+    turn_left = not turn_left
+    turn_robot()
     follow_line()
 
 
-
 def follow_line():                                        #line_follower main code
-    global mode
     while True:
         p = subprocess.Popen(['python', 'line_detect.py'])
         #(output, err) = p.communicate()
@@ -94,16 +70,10 @@ def follow_line():                                        #line_follower main co
         rfid_read()
 
 
-
-
-
-
 def take_pressure():                                      #pressure taking button
     pressures.on()
+    time.sleep(0.5)
     pressures.off()
-
-
-
 
 robo_actions = {
     "forward": robot.forward,

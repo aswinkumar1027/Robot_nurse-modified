@@ -10,18 +10,18 @@ leftback = gpiozero.DigitalInputDevice(23)
 rightback = gpiozero.DigitalInputDevice(19)
 
 
- while True:
-        if (leftback.is_active == True) and (rightback == True):
-            print("Junction stop")
-            robot.stop()
-            break
+while True:
+    if leftback.is_active and rightback:
+        print("Junction stop")
+        robot.stop()
+        break
 
-        elif (center.is_active == True) and (leftend.is_active == False) and (rightend.is_active == False):
-            print("forward")
-            robot.forward()
-        elif (leftend.is_active == False) and (rightend.is_active == True):
-            robot.right()
-            print("right")
-        elif (leftend.is_active == True) and (rightend.is_active == False):
-            robot.left()
-            print("left")
+    elif center.is_active and (not leftend.is_active) and (not rightend.is_active):
+        print("forward")
+        robot.forward()
+    elif (not leftend.is_active) and rightend.is_active:
+        robot.right()
+        print("right")
+    elif leftend.is_active and (not rightend.is_active):
+        robot.left()
+        print("left")
