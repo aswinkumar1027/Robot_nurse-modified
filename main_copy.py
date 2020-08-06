@@ -29,6 +29,7 @@ ser=serial.Serial("/dev/ttyACM0",9600)  #change ACM number as found from ls /dev
 ser.baudrate = 9600
 
 turn_left = False
+line_follow_mode = False
 
 def line_follow_config(fn):
     leftend.when_activated = fn
@@ -45,6 +46,9 @@ def line_follow_config(fn):
     rightback.when_deactivated = fn
 
     
+def stop_line_follow():
+    global line_follow_mode
+    line_follow_mode = False
     
 
 def rfid_read():
@@ -71,11 +75,10 @@ def turn_robot():
     if turn_left:                                  #interaction left turning
         print("turning_left")
         robot.left()
-        time.sleep(0.7)
     else:
         print("turning_right")
         robot.right()
-        time.sleep(0.7)
+    time.sleep(1)
     while True:
         if center.is_active:
             print("center_active")
@@ -102,10 +105,17 @@ def turn_robot():
 
 
 def check():
+
+    if not line_follow_mode:
+        return
+
+    print(center.is_active , leftend.is_active , rightend.is_active, leftback.is_active , rightback.is_active)
+
+
     if leftback.is_active and rightback.is_active:
         print("Junction stop")
         robot.stop()
-        line_follow_config(None)
+        stop_line_follow()
         rfid_read()
     
     elif center.is_active and leftend.is_active and rightend.is_active:
@@ -129,9 +139,14 @@ def check():
 
 
 def line_follow():
-    line_follow_config(check)
+    print("line_follow")
+
+    global line_follow_mode
+    line_follow_mode = True
     check()
 
+
+line_follow_config(check)
 
 def examine():
     global turn_left                                        #examination_finish and continue
@@ -143,6 +158,9 @@ def examine():
     print("line_follow_started")
     line_follow()
 
+def stop_robot():
+    robot.stop()
+    stop_line_follow()
 
 
 def take_pressure():                                      #pressure taking button
@@ -155,7 +173,7 @@ robo_actions = {
     "backward": robot.backward,
     "left": robot.left,
     "right": robot.right,
-    "stop": robot.stop,
+    "stop": stop_robot,
     "line": line_follow,
     "examine": examine,
     "pressure": take_pressure,
