@@ -25,7 +25,7 @@ rfid_dict = {'E235FC8B\r\n': 'A1'}
 active_beds = ('A1')                                        #fetch from main server
 left_beds = ('A1')
 
-ser=serial.Serial("/dev/ttyACM0",9600)  #change ACM number as found from ls /dev/tty/ACM*
+ser=serial.Serial("/dev/ttyACM1",9600)  #change ACM number as found from ls /dev/tty/ACM*
 ser.baudrate = 9600
 
 turn_left = False
@@ -49,6 +49,9 @@ def line_follow_config(fn):
 def stop_line_follow():
     global line_follow_mode
     line_follow_mode = False
+    print("pressed_stop")
+    robot.stop()
+    
     
 
 def rfid_read():
@@ -106,14 +109,13 @@ def turn_robot():
 
 def check():
     while True:
+        print(center.is_active , leftend.is_active , rightend.is_active, leftback.is_active , rightback.is_active)
         if not line_follow_mode:
+            robot.stop()
             print("not_line follow mode")
             break
 
-        print(center.is_active , leftend.is_active , rightend.is_active, leftback.is_active , rightback.is_active)
-
-
-        if leftback.is_active and rightback.is_active:
+        elif leftback.is_active and rightback.is_active:
             print("Junction stop")
             robot.stop()
             stop_line_follow()
@@ -174,7 +176,7 @@ robo_actions = {
     "backward": robot.backward,
     "left": robot.left,
     "right": robot.right,
-    "stop": stop_robot,
+    "stop": stop_line_follow,
     "line": line_follow,
     "examine": examine,
     "pressure": take_pressure,
