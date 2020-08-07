@@ -9,6 +9,7 @@ import subprocess
 import os
 
 
+
 robot = gpiozero.Robot(left=(26,16), right=(5,6))
 
 leftend = gpiozero.DigitalInputDevice(17)
@@ -59,6 +60,7 @@ def rfid_read():
         turn_robot()
     else:
         print("not in active beds list")
+        print("not active_bed")
         # So that robot automatically moves on to next bed
         robot.forward()
         time.sleep(1)
@@ -76,15 +78,16 @@ def turn_robot():
         time.sleep(0.7)
     while True:
         if center.is_active:
+            print("center_active")
+            time.sleep(0.4)
+            print("time_implemented")   #implement timne delay
             robot.stop()
+            print("robot_stopped")
             break
 
 
-def examine():
-    global turn_left                                        #examination_finish and continue
-    turn_left = not turn_left
-    turn_robot()
-    #follow_line()
+
+    
 
 
 
@@ -128,6 +131,17 @@ def check():
 def line_follow():
     line_follow_config(check)
     check()
+
+
+def examine():
+    global turn_left                                        #examination_finish and continue
+    turn_left = not turn_left
+    turn_robot()
+    robot.forward()
+    print("forward_after turn")
+    time.sleep(1.3)
+    print("line_follow_started")
+    line_follow()
 
 
 
