@@ -26,6 +26,8 @@
       <button id="line">Follow Line</button>
       <button id="pressure">pressur button</button>
       <button id="Temperature">temperature</button>
+      <button id="examine">examine</button>
+
     </div>
     <script>
       	$("button").click(function() {$.post("/move", {movement: this.id})});

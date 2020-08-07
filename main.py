@@ -105,34 +105,35 @@ def turn_robot():
 
 
 def check():
+    while True:
+        if not line_follow_mode:
+            print("not_line follow mode")
+            break
 
-    if not line_follow_mode:
-        return
-
-    print(center.is_active , leftend.is_active , rightend.is_active, leftback.is_active , rightback.is_active)
+        print(center.is_active , leftend.is_active , rightend.is_active, leftback.is_active , rightback.is_active)
 
 
-    if leftback.is_active and rightback.is_active:
-        print("Junction stop")
-        robot.stop()
-        stop_line_follow()
-        rfid_read()
-    
-    elif center.is_active and leftend.is_active and rightend.is_active:
-        print("near_junction")
-        robot.forward()
-        time.sleep(0.2)
+        if leftback.is_active and rightback.is_active:
+            print("Junction stop")
+            robot.stop()
+            stop_line_follow()
+            rfid_read()
         
+        #elif center.is_active and leftend.is_active and rightend.is_active:
+         #   print("near_junction")
+          #  robot.forward()
+           # time.sleep(0.2)
+            
 
-    elif center.is_active and (not leftend.is_active) and (not rightend.is_active):
-        print("forward")
-        robot.forward()
-    elif (not leftend.is_active) and rightend.is_active:
-        robot.right()
-        print("right")
-    elif leftend.is_active and (not rightend.is_active):
-        robot.left()
-        print("left")
+        elif center.is_active and (not leftend.is_active) and (not rightend.is_active):
+            print("forward")
+            robot.forward()
+        elif (not leftend.is_active) and rightend.is_active:
+            robot.right()
+            print("right")
+        elif leftend.is_active and (not rightend.is_active):
+            robot.left()
+            print("left")
 
 
 
@@ -146,7 +147,7 @@ def line_follow():
     check()
 
 
-line_follow_config(check)
+#line_follow_config(check)
 
 def examine():
     global turn_left                                        #examination_finish and continue
