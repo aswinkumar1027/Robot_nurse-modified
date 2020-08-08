@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robo Control</title>
+    <link rel="stylesheet" href="./css/style.css" type="text/css"/>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="57x57" href="./images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="./images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="./images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#3E3E3E">
+    <meta name="msapplication-TileImage" content="./images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#3E3E3E">
+    <!--  -->
+</head>
+<body>
+    <header class="title">
+        <div>
+            <h1>Robo Control</h1>
+        </div>
+    </header>
+    <main>
+        <section class="card">
+            <span class="one-part">
+                <p>
+                    Examine
+                </p>
+                <button class="on-btn" id="examine-btn">
+                    ON
+                </button>
+            </span>
+            <span class="one-part">
+                <p>
+                    Temperature
+                </p>
+                <button class="off-btn" id="temperature-btn">
+                    OFF 
+                </button>
+            </span>
+            <span class="one-part">
+                <p>
+                    Pressure
+                </p>
+                <button class="off-btn" id="pressure-btn">
+                    OFF 
+                </button>
+            </span>
+        </section>
+        <section class="controller-card">
+            <span class="one-part">
+                <p>
+                    Follow Line
+                </p>
+                <button class="on-btn" id="followLine-btn">
+                    ON
+                </button>
+            </span>
+            <span class="one-part">
+                <button class="off-btn" id="startStop-btn">
+                    STOP 
+                </button>
+            </span>
+            <div class="controller">
+                <button class="control-btn">
+                    <img class="control-img" src="./images/forward.png"/>
+                </button><br/>
+                <span class="controls-lfrt">
+                    <button class="control-btn">
+                        <img class="control-img" src="./images/left.png"/>
+                    </button>
+                    <button class="control-btn">
+                        <img class="control-img" src="./images/right.png"/>
+                    </button>
+                </span>
+                <button class="control-btn">
+                    <img class="control-img" src="./images/back.png"/>
+                </button><br/>
+            </div>
+        </section>
+    </main>
+    <script type="text/javascript">
+        $(document).ready(function(e){
+                // alert("here");
+                $('#examine-btn').click(function(){
+                if ($('#examine-btn').hasClass("on-btn")){
+                    $('#examine-btn').removeClass("on-btn").addClass("off-btn")
+                        .empty().append("OFF");
+                } else {
+                    $('#examine-btn').removeClass("off-btn").addClass("on-btn")
+                        .empty().append("ON");
+                }
+            });
+
+            $('#temperature-btn').click(function(){
+                if ($('#temperature-btn').hasClass("on-btn")){
+                    $('#temperature-btn').removeClass("on-btn").addClass("off-btn")
+                        .empty().append("OFF");
+                } else {
+                    $('#temperature-btn').removeClass("off-btn").addClass("on-btn")
+                        .empty().append("ON");
+                }
+            });
+
+            $('#pressure-btn').click(function(){
+                if ($('#pressure-btn').hasClass("on-btn")){
+                    $('#pressure-btn').removeClass("on-btn").addClass("off-btn")
+                        .empty().append("OFF");
+                } else {
+                    $('#pressure-btn').removeClass("off-btn").addClass("on-btn")
+                        .empty().append("ON");
+                }
+            });
+
+            $('#followLine-btn').click(function(){
+                if ($('#followLine-btn').hasClass("on-btn")){
+                    $('#followLine-btn').removeClass("on-btn").addClass("off-btn")
+                        .empty().append("OFF");
+                } else {
+                    $('#followLine-btn').removeClass("off-btn").addClass("on-btn")
+                        .empty().append("ON");
+                }
+            });
+
+            $('#startStop-btn').click(function(){
+                if ($('#startStop-btn').hasClass("on-btn")){
+                    $('#startStop-btn').removeClass("on-btn").addClass("off-btn")
+                        .empty().append("STOP");
+                } else {
+                    $('#startStop-btn').removeClass("off-btn").addClass("on-btn")
+                        .empty().append("START");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
